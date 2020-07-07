@@ -6,6 +6,7 @@ import VueI18n from 'vue-i18n';
 import {
   messages
 } from './components/common/i18n';
+import { Message } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 // import './assets/css/theme-green/index.css'; // 浅绿色主题
 import './assets/css/icon.css';
@@ -55,7 +56,7 @@ router.beforeEach((to, from, next) => {
     if (isGoTo) {
       next();
     } else {
-      alert('权限不足');return;
+      Message.error('权限不足');return;
     }
   }
 });
