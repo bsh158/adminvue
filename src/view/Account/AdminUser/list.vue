@@ -161,10 +161,12 @@ export default {
     methods: {
         //初始化
         init() {
-            AdminUser.getUserList({}).then(res => {
+            AdminUser.getUserList({
+                page: this.query.pageIndex
+            }).then(res => {
                 if (res.code == 1) {
                     this.tableData = res.data.data;
-                    this.pageTotal = res.total;
+                    this.pageTotal = res.data.total;
                 }
             });
         },
@@ -293,7 +295,7 @@ export default {
         // 分页导航
         handlePageChange(val) {
             this.$set(this.query, 'pageIndex', val);
-            this.getData();
+            this.init();
         }
     }
 };

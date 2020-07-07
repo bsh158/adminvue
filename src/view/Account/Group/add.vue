@@ -10,7 +10,7 @@
                         v-for="(item,index) in options"
                         :key="index"
                         :label="item.title"
-                        :value="item.group_id"
+                        :value="item.id"
                         :name="item.title"
                     ></el-option>
                 </el-select>
@@ -75,7 +75,7 @@ export default {
             isLoading: false,
             form: {
                 title: '',
-                pid: 0,
+                pid: '',
                 remark: '',
                 rules: '',
                 status: '',

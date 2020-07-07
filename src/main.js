@@ -44,7 +44,19 @@ router.beforeEach((to, from, next) => {
   if (!role && to.path !== '/login') {
     next('/login');
   } else {
-    next();
+    let userInfo = Lockr.get('userInfo');
+    let isGoTo = null;
+    if (userInfo.id == 1) {
+      isGoTo = true
+    } else {
+      let authList = Lockr.get('menuauthList')
+      isGoTo = _.includes(authList, to.path)
+    }
+    if (isGoTo) {
+      next();
+    } else {
+      alert('权限不足');return;
+    }
   }
 });
 
