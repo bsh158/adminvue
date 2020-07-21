@@ -58,6 +58,7 @@ export default {
                             Lockr.set('rememberKey', res.data.rememberKey); // 记住密码的加密字符串
                             Lockr.set('authList', res.data.authList); // 权限节点列表
                             Lockr.set('userInfo', res.data.userInfo); // 用户信息
+                            Lockr.set('menuauthList', res.data.menuauthList); // 菜单数组
                             Lockr.set('sessionId', res.data.sessionId); // 用户sessionid
                             // window.axios.defaults.headers.authKey = localStorage.getItem('authKey');
                             let routerUrl = '';

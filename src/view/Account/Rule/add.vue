@@ -67,7 +67,7 @@ export default {
                             this.$message.success('添加成功');
                             setTimeout(() => {
                                 this.$store.dispatch('delVisitedViews', this.$route);
-                                this.goback();
+                                this.$router.go(-1);
                             }, 1500);
                         }
                     });

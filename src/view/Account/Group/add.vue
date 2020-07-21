@@ -10,7 +10,7 @@
                         v-for="(item,index) in options"
                         :key="index"
                         :label="item.title"
-                        :value="item.group_id"
+                        :value="item.id"
                         :name="item.title"
                     ></el-option>
                 </el-select>
@@ -75,7 +75,7 @@ export default {
             isLoading: false,
             form: {
                 title: '',
-                pid: 0,
+                pid: '',
                 remark: '',
                 rules: '',
                 status: '',
@@ -106,7 +106,7 @@ export default {
                             this.$message.success(`添加成功`);
                             setTimeout(() => {
                                 this.$store.dispatch('delVisitedViews', this.$route);
-                                this.goback();
+                                this.$router.go(-1);
                             }, 1500);
                         }
                     });

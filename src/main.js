@@ -6,6 +6,7 @@ import VueI18n from 'vue-i18n';
 import {
   messages
 } from './components/common/i18n';
+import { Message } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 // import './assets/css/theme-green/index.css'; // 浅绿色主题
 import './assets/css/icon.css';
@@ -44,7 +45,19 @@ router.beforeEach((to, from, next) => {
   if (!role && to.path !== '/login') {
     next('/login');
   } else {
-    next();
+    let userInfo = Lockr.get('userInfo');
+    let isGoTo = null;
+    if (userInfo.id == 1) {
+      isGoTo = true
+    } else {
+      let authList = Lockr.get('menuauthList')
+      isGoTo = _.includes(authList, to.path)
+    }
+    if (isGoTo) {
+      next();
+    } else {
+      Message.error('权限不足');return;
+    }
   }
 });
 
