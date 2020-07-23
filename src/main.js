@@ -13,6 +13,7 @@ import './assets/css/icon.css';
 import './components/common/directives';
 import 'babel-polyfill';
 import MyPlugin from '@/tools/myPlugin' //自定义全局方法
+import filter from '@/tools/filter' //过滤器
 import store from '@/store/index'
 import VueCookies from 'vue-cookies'
 import Lockr from 'lockr' //缓存Api
@@ -64,6 +65,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
   router,
   store,
+  filter,
   i18n,
   render: h => h(App)
 }).$mount('#app');
