@@ -60,6 +60,8 @@ export default {
                             Lockr.set('userInfo', res.data.userInfo); // 用户信息
                             Lockr.set('menuauthList', res.data.menuauthList); // 菜单数组
                             Lockr.set('sessionId', res.data.sessionId); // 用户sessionid
+                            
+                            Basic.Record({login_name:res.data.userInfo.username}).then((res))
                             // window.axios.defaults.headers.authKey = localStorage.getItem('authKey');
                             let routerUrl = '';
 
