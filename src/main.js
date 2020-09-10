@@ -42,23 +42,38 @@ window.store = store; //缓存Api
 
 //使用钩子函数对路由进行权限跳转
 router.beforeEach((to, from, next) => {
-  const role = localStorage.getItem('authKey');
-  if (!role && to.path !== '/login') {
+  const role = Lockr.get('authKey');
+  if (!role && to.path != '/login') {
     next('/login');
   } else {
     let userInfo = Lockr.get('userInfo');
-    let isGoTo = null;
-    if (userInfo.id == 1) {
-      isGoTo = true
-    } else {
-      let authList = Lockr.get('menuauthList')
-      isGoTo = _.includes(authList, to.path)
-    }
-    if (isGoTo) {
+    if (!role) {
       next();
     } else {
-      Message.error('权限不足');return;
+      let isGoTo = null;
+      if (userInfo.id == 1) {
+        isGoTo = true
+      } else {
+        let authList = Lockr.get('menuauthList')
+        isGoTo = _.includes(authList, to.path)
+      }
+      if (isGoTo) {
+        next();
+      } else {
+        const key = to.path.lastIndexOf('/')
+        const list = to.path.substring(key + 1, -1)
+        const listpath = list + 'list';
+
+        let authList = Lockr.get('menuauthList')
+        isGoTo = _.includes(authList, listpath)
+        if (isGoTo) {
+          next();
+        } else {
+          Message.error('权限不足'); return;
+        }
+      }
     }
+
   }
 });
 

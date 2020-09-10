@@ -100,7 +100,7 @@ export default {
                     AdminUser.addUser({
                         username: this.form.username,
                         password: this.form.password,
-                        realaname: this.form.realaname,
+                        realname: this.form.realname,
                         mobile: this.form.mobile,
                         remark: this.form.remark,
                         status: this.form.status,
