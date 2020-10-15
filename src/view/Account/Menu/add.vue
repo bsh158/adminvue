@@ -53,6 +53,12 @@
                     <el-radio label="1">启用</el-radio>
                 </el-radio-group>
             </el-form-item>
+            <el-form-item label="是否展示" prop="is_show" v-if="form.pid">
+                <el-radio-group v-model="form.is_show">
+                    <el-radio label="1">展示</el-radio>
+                    <el-radio label="0">不展示</el-radio>
+                </el-radio-group>
+            </el-form-item>
             <el-form-item>
                 <el-button @click="goback()">取消</el-button>
                 <el-button type="primary" @click="save('form')">提交</el-button>
@@ -86,7 +92,8 @@ export default {
                 url: '',
                 module: '',
                 menu: '',
-                sort: ''
+                sort: '',
+                is_show:'1'
             },
             options: [{ id: 0, title: '无' }],
             ruleData:{},
@@ -96,7 +103,8 @@ export default {
                 menu_type: [{ required: true, message: '请选择菜单类型' }],
                 pid: [{ type: 'number', required: true, message: '请选择上级菜单' }],
                 menu_type: [{ required: true, message: '请选择启用状态' }],
-                status: [{ required: true, message: '请选择菜单状态' }]
+                status: [{ required: true, message: '请选择菜单状态' }],
+                is_show: [{ required: true, message: '请选择展示状态' }]
             },
         };
     },
@@ -141,7 +149,8 @@ export default {
                         module: 'Main',
                         menu: this.form.menu,
                         sort: this.form.sort,
-                        status: this.form.status
+                        status: this.form.status,
+                        is_show: this.form.is_show
                     }).then(res => {
                         if (res.code == 1) {
                             // this.$message.success(`修改第 ${this.idx + 1} 行成功`);

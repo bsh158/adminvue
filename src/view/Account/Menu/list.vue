@@ -3,12 +3,9 @@
         <div class="container">
             <div class="handle-box">
                 <router-link to="add">
-                    <el-button
-                        type="success"
-                        v-if="getHasRule('admin-menus-save')"
-                        icon="el-icon-plus"
-                        class="handle-del mr10"
-                    >添加菜单</el-button>
+                    <el-button type="success" v-if="getHasRule('admin-menus-save')" icon="el-icon-plus" class="handle-del mr10"
+                        >添加菜单</el-button
+                    >
                 </router-link>
             </div>
             <el-table
@@ -42,7 +39,8 @@
                             type="text"
                             icon="el-icon-edit"
                             @click="handleEdit(scope.$index, scope.row)"
-                        >编辑</el-button>
+                            >编辑</el-button
+                        >
 
                         <el-button
                             v-if="getHasRule('admin-menus-delete')"
@@ -50,7 +48,8 @@
                             icon="el-icon-delete"
                             class="red"
                             @click="handleDelete(scope.$index, scope.row)"
-                        >删除</el-button>
+                            >删除</el-button
+                        >
                     </template>
                 </el-table-column>
             </el-table>
@@ -67,12 +66,7 @@
                 </el-form-item>
                 <el-form-item label="绑定权限标识" prop="rule_id">
                     <el-select v-model="form.rule_id" filterable placeholder="请选择">
-                        <el-option
-                            v-for="item in options"
-                            :key="item.id"
-                            :label="item.title"
-                            :value="item.id"
-                        ></el-option>
+                        <el-option v-for="item in options" :key="item.id" :label="item.title" :value="item.id"></el-option>
                     </el-select>
                     <!-- <el-input v-model.trim="form.rule_name" class="h-40 fl w-200" :disabled="true"></el-input> -->
                 </el-form-item>
@@ -85,12 +79,7 @@
                 </el-form-item>
                 <el-form-item label="上级菜单" prop="pid">
                     <el-select disabled v-model="form.pid" placeholder="请选择活动区域" class="w-200">
-                        <el-option
-                            v-for="(item,index) in tableData"
-                            :label="item.title"
-                            :value="item.id"
-                            :key="index"
-                        ></el-option>
+                        <el-option v-for="(item, index) in tableData" :label="item.title" :value="item.id" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="路径">
@@ -112,6 +101,12 @@
                     <el-radio-group v-model="form.status">
                         <el-radio label="0">禁用</el-radio>
                         <el-radio label="1">启用</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="是否展示" prop="is_show" v-if="form.pid">
+                    <el-radio-group v-model="form.is_show">
+                        <el-radio label="1">展示</el-radio>
+                        <el-radio label="0">不展示</el-radio>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
@@ -149,7 +144,8 @@ export default {
                 menu_type: [{ required: true, message: '请选择菜单类型' }],
                 pid: [{ type: 'number', required: true, message: '请选择上级菜单' }],
                 menu_type: [{ required: true, message: '请选择启用状态' }],
-                status: [{ required: true, message: '请选择菜单状态' }]
+                status: [{ required: true, message: '请选择菜单状态' }],
+                is_show: [{ required: true, message: '请选择展示状态' }]
             },
             options: {}
         };
@@ -160,12 +156,12 @@ export default {
     methods: {
         //初始化
         init() {
-            AdminMenu.getMenuList({}).then(res => {
+            AdminMenu.getMenuList({}).then((res) => {
                 if (res.code == 1) {
                     this.tableData = res.data;
                 }
             });
-            AdminRule.getRuleList({}).then(res => {
+            AdminRule.getRuleList({}).then((res) => {
                 if (res.code == 1) {
                     this.options = res.data;
                 }
@@ -179,7 +175,7 @@ export default {
         handleDelete(index, row) {
             AdminMenu.delMenu({
                 id: row.id
-            }).then(res => {
+            }).then((res) => {
                 if (res.code == 1) {
                     this.$message.success('删除成功');
                     this.init();
@@ -205,10 +201,11 @@ export default {
             this.idx = index;
             AdminMenu.readMenu({
                 id: row.id
-            }).then(res => {
+            }).then((res) => {
                 if (res.code == 1) {
                     res.data.menu_type = res.data.menu_type.toString();
                     res.data.status = res.data.status.toString();
+                    res.data.is_show = res.data.is_show.toString();
                     this.form = res.data;
                 }
             });
@@ -217,7 +214,7 @@ export default {
         // 保存编辑
         saveEdit() {
             this.editVisible = false;
-            this.$refs.form.validate(valid => {
+            this.$refs.form.validate((valid) => {
                 if (valid) {
                     AdminMenu.editMenu({
                         id: this.form.id,
@@ -230,8 +227,9 @@ export default {
                         module: 'Main',
                         menu: this.form.menu,
                         sort: this.form.sort,
-                        status: this.form.status
-                    }).then(res => {
+                        status: this.form.status,
+                        is_show: this.form.is_show
+                    }).then((res) => {
                         if (res.code == 1) {
                             // this.$message.success(`修改第 ${this.idx + 1} 行成功`);
                             this.$message.success(`修改成功`);

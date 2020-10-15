@@ -1,4 +1,4 @@
 module.exports = {
-  // baseUrl: 'http://www.adminvue.com'
-  baseUrl: 'http://adminvueapi.soft-in-hard.vip'
+  baseUrl: 'http://www.lufu.com'
+  // baseUrl: 'http://adminvueapi.soft-in-hard.vip'
 }
